@@ -131,11 +131,11 @@ end
 
   ```ruby
   def find_by(attribute, value)
-    row = connection.get_first_row(<<-SQL)
+    rows = connection.execute(<<-SQL)
       SELECT #{columns.join(',')} FROM entry
-      WHERE #{attribute} = #{value};
+      WHERE #{attribute} = #{BlocRecord::Utility.sql_strings(value)};
     SQL
 
-    row
+    rows
   end
   ```
